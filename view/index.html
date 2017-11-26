@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>Simple-API-Nodejs</title>
+    <style>
+        div {
+            margin: 10px 0px;
+            padding: 10px;
+            border: 1px solid #333;
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+<h1>Hello World!</h1>
+<div id="get">
+    <button onclick="get();">GET</button>
+    <p>LIST</p>
+    <div></div>
+</div>
+
+<div id="post">
+    <input type="text" name="id" placeholder="USER ID"/>
+    <input type="text" name="name" placeholder="USER NAME"/>
+    <button onclick="post();">POST</button>
+</div>
+
+<div id="del">
+    <input type="text" name="id" placeholder="USER ID"/>
+    <button onclick="del();">DELETE</button>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+    'use strict';
+
+    function get () {
+        $('div#get > div').html('');
+
+        $.ajax({
+            url: '/user',
+            type: 'GET',
+            contentType: 'application/json; charset=UTF-8',
+            success: function (resData) {
+                console.log(resData);
+
+                let cntOfData = resData.length;
+
+                for (let i = 0; i < cntOfData; i++) {
+                    $('div#get > div').append('<p>' + resData[i].user_id + ' / ' + resData[i].user_name + '</p>');
+                }
+            }
+        });
+    }
+
+    function post () {
+        let reqData = {
+            'user_id' : $("div#post input[name=id]").val(),
+            'user_name' : $("div#post input[name=name]").val(),
+        };
+
+        console.log('reqData - ' + reqData);
+
+        $.ajax({
+            url: '/user',
+            type: 'POST',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(reqData),
+            success: function (resData) {
+                console.log('resData - ' + JSON.stringify(resData));
+
+                if (resData.result === 'Y') {
+                    alert("Success !");
+                } else {
+                    alert("Fail !");
+                }
+
+                get();
+            }
+        });
+    }
+
+    function del () {
+        let reqData = {
+            'user_id' : $("div#del input[name=id]").val(),
+        };
+
+        console.log('reqData - ' + reqData);
+
+        $.ajax({
+            url: '/user',
+            type: 'DELETE',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(reqData),
+            success: function (resData) {
+                console.log('resData - ' + JSON.stringify(resData));
+
+                get();
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        get();
+    });
+
+</script>
+</body>
+</html>
