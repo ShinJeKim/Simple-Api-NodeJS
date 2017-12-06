@@ -85,5 +85,7 @@ app.put('/user', function (req, res) {
         }
 
         res.json({'result': 'Y'});
+        console.log('haha');
+        return console.log({'result': 'Y'});
     });
 });
