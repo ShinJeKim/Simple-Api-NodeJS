@@ -34,7 +34,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/user', function (req, res) {
-    console.log('Api GET "/user" ');
+    console.log('Api GET "/user"');
 
     let getInfoOfUser_q = 'SELECT * FROM `STUDY`.`USER` ORDER BY `id` DESC;';
     let getInfoOfUser = connection.query(getInfoOfUser_q, function (getInfoOfUserErr, getInfoOfUserResult) {
@@ -48,7 +48,7 @@ app.get('/user', function (req, res) {
 });
 
 app.post('/user', function (req, res) {
-    console.log('Api POST "/user" ');
+    console.log('Api POST "/user"');
 
     let setNewUser_q = 'INSERT INTO `STUDY`.`USER` (`user_id`, `user_name`) VALUES ("' + req.body.user_id + '", "' + req.body.user_name + '") ;';
     let setNewUser = connection.query(setNewUser_q, function (setNewUserErr) {
@@ -62,7 +62,7 @@ app.post('/user', function (req, res) {
 });
 
 app.delete('/user', function (req, res) {
-    console.log('Api DELETE "/user" ');
+    console.log('Api DELETE "/user"');
 
     let delUser_q = 'DELETE FROM `STUDY`.`USER` WHERE (`user_id` = "' + req.body.user_id + '") ORDER BY `id` DESC LIMIT 1;';
     let delUser = connection.query(delUser_q, function (delUserErr) {
@@ -85,7 +85,6 @@ app.put('/user', function (req, res) {
         }
 
         res.json({'result': 'Y'});
-        console.log('haha');
         return console.log({'result': 'Y'});
     });
 });
