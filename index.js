@@ -1,27 +1,28 @@
 /**
  * Simple Resume Web With Node.js
  */
-
 'use strict';
 
-const express = require('express'),
-    path = require('path'),
-    mysql = require('mysql'),
-    app = express(),
-    bodyParser = require('body-parser'),
-    port = 1995,
-    connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'root',
-        port: 8889,
-        database: 'STUDY'
-    });
+const express = require('express');
+const path = require('path');
+const mysql = require('mysql');
+const app = express();
+const bodyParser = require('body-parser');
+const port = 1995;
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    port: 8889,
+    database: 'company'
+});
 
 connection.connect();
 
 app.use('/assets', express.static(__dirname + '/view'));
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(bodyParser.json());
 
 app.listen(port, function () {
@@ -29,15 +30,18 @@ app.listen(port, function () {
 });
 
 app.get('/', function (req, res) {
-    res.sendFile('index.html', {root: path.join(__dirname, './view')});
+    res.sendFile('index.html', {
+        root: path.join(__dirname, './view')
+    });
+    
     console.log('CONNECTION GET');
 });
 
-app.get('/user', function (req, res) {
-    console.log('Api GET "/user"');
+app.get('/career', function (req, res) {
+    console.log('Api GET "/career"');
 
-    let getInfoOfUser_q = 'SELECT * FROM `STUDY`.`USER` ORDER BY `id` DESC;';
-    let getInfoOfUser = connection.query(getInfoOfUser_q, function (getInfoOfUserErr, getInfoOfUserResult) {
+    let getInfoOfUserQ = 'SELECT * FROM `company`.`CAREER` ORDER BY `id` DESC;';
+    let getInfoOfUser = connection.query(getInfoOfUserQ, function (getInfoOfUserErr, getInfoOfUserResult) {
         if (getInfoOfUserErr) {
             throw new Error(getInfoOfUserErr);
         }
@@ -47,44 +51,56 @@ app.get('/user', function (req, res) {
     });
 });
 
-app.post('/user', function (req, res) {
-    console.log('Api POST "/user"');
+app.post('/career', function (req, res) {
+    console.log('Api POST "/career"');
 
-    let setNewUser_q = 'INSERT INTO `STUDY`.`USER` (`user_id`, `user_name`) VALUES ("' + req.body.user_id + '", "' + req.body.user_name + '") ;';
-    let setNewUser = connection.query(setNewUser_q, function (setNewUserErr) {
+    let setNewUserQ = 'INSERT INTO `company`.`CAREER` (`title`, `description`) VALUES ("' + req.body.title + '", "' + req.body.description + '") ;';
+    let setNewUser = connection.query(setNewUserQ, function (setNewUserErr) {
         if (setNewUserErr) {
             throw new Error(setNewUserErr);
         }
 
-        res.json({'result': 'Y'});
-        return console.log({'result': 'Y'});
+        res.json({
+            'result': 'Y'
+        });
+        return console.log({
+            'result': 'Y'
+        });
     });
 });
 
-app.delete('/user', function (req, res) {
-    console.log('Api DELETE "/user"');
+app.delete('/career', function (req, res) {
+    console.log('Api DELETE "/career"');
 
-    let delUser_q = 'DELETE FROM `STUDY`.`USER` WHERE (`user_id` = "' + req.body.user_id + '") ORDER BY `id` DESC LIMIT 1;';
-    let delUser = connection.query(delUser_q, function (delUserErr) {
+    let delUserQ = 'DELETE FROM `company`.`CAREER` WHERE (`title` = "' + req.body.title + '") ORDER BY `id` DESC LIMIT 1;';
+    let delUser = connection.query(delUserQ, function (delUserErr) {
         if (delUserErr) {
             throw new Error(delUserErr);
         }
 
-        res.json({'result': 'Y'});
-        return console.log({'result': 'Y'});
+        res.json({
+            'result': 'Y'
+        });
+        return console.log({
+            'result': 'Y'
+        });
     });
 });
 
-app.put('/user', function (req, res) {
-    console.log('Api PUT "/user" ');
+app.put('/career', function (req, res) {
+    console.log('Api PUT "/career" ');
 
-    let putUser_q = 'UPDATE `STUDY`.`USER` SET `user_name` = "' + req.body.user_name + '" WHERE (`user_id` = "' + req.body.user_id + '") ORDER BY `id` DESC LIMIT 1;';
-    let putUser = connection.query(putUser_q, function (putUserErr) {
+    let putUserQ = 'UPDATE `company`.`CAREER` SET `description` = "' + req.body.description + '" WHERE (`title` = "' + req.body.title + '") ORDER BY `id` DESC LIMIT 1;';
+    let putUser = connection.query(putUserQ, function (putUserErr) {
         if (putUserErr) {
             throw new Error(putUserErr);
         }
 
-        res.json({'result': 'Y'});
-        return console.log({'result': 'Y'});
+        res.json({
+            'result': 'Y'
+        });
+        return console.log({
+            'result': 'Y'
+        });
     });
 });
