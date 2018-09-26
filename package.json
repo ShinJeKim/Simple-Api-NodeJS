@@ -1,5 +1,5 @@
 {
-  "name": "teddy-resume-node",
+  "name": "front-back-end-project-study-sample",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -7,12 +7,21 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Sample Page, Portfolio Page With Node.js",
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.15.4",
     "mysql": "^2.15.0",
     "path": "^0.12.7",
     "request": "^2.81.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XoDNr/Simple-Api-NodeJS.git"
+  },
+  "bugs": {
+    "url": "https://github.com/XoDNr/Simple-Api-NodeJS/issues"
+  },
+  "homepage": "https://github.com/XoDNr/Simple-Api-NodeJS#readme"
 }
